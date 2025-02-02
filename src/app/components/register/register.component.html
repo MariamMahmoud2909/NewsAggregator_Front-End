@@ -1,0 +1,148 @@
+<div class="container d-flex align-items-center justify-content-center pb-3">
+  <div class="row w-100">
+    <div class="w-100 d-flex justify-content-center align-items-center pt-3">
+      <!-- Make the form container wider, using col-lg-8 or col-xl-10 -->
+      <div class="form-container col-lg-8 col-xl-10 ">
+        <div class="text-center mb-3">
+          <img src="../../../assets/images/logo2.png" alt="Logo" width="70px" class="mb-2">
+          <h1 class="form-title">Create account</h1>
+          <p class="form-text">Let's get you started sharing your links!</p>
+        </div>
+        <form enctype='multipart/form-data' [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+          <div class="row g-2">
+            <div class="col">
+              <label for="firstName" class="form-label">First Name</label>
+              <input formControlName="firstName" type="text" class="form-control w-100" id="firstName" placeholder="First Name" required>
+              @if (registerForm.get('firstName')?.errors && registerForm.get('firstName')?.touched)
+              {
+                <div class="alert alert-danger w-100">
+                  @if (registerForm.get('firstName')?.getError('required') )
+                  {
+                    <p class="m-0">Name Is Required</p>
+                  }
+                  @else if (registerForm.get('firstName')?.getError('minlength'))
+                  {
+                    <p class="m-0">Name Should conatins atleast 3 Chars</p>
+                  }
+                  @else if (registerForm.get('firstName')?.getError('maxlength'))
+                  {
+                    <p class="m-0">Name Should conatins atmost 20 Charss</p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input formControlName="lastName" type="text" class="form-control w-100" id="lastName" placeholder="Last Name" required>
+              @if (registerForm.get('lastName')?.errors && registerForm.get('lastName')?.touched)
+              {
+                <div class="alert alert-danger w-100">
+                  @if (registerForm.get('lastName')?.getError('required') )
+                  {
+                    <p class="m-0">Name Is Required</p>
+                  }
+                  @else if (registerForm.get('lastName')?.getError('minlength'))
+                  {
+                    <p class="m-0">Name Should conatins atleast 3 Chars</p>
+                  }
+                  @else if (registerForm.get('lastName')?.getError('maxlength'))
+                  {
+                    <p class="m-0">Name Should conatins atmost 20 Charss</p>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label pt-3">Email address</label>
+            <input formControlName="email" type="email" class="form-control w-100" id="email" placeholder="e.g. alex@email.com" required>
+            @if (registerForm.get('email')?.errors && registerForm.get('email')?.touched)
+            {
+              <div class="alert alert-danger w-100">
+                @if (registerForm.get('email')?.getError('required') )
+                {
+                  <p class="m-0">Email Is Required</p>
+                }
+                @else if (registerForm.get('email')?.getError('email'))
+                {
+                  <p class="m-0">Enter Valid Email</p>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input formControlName="userName"  type="text" class="form-control w-100" id="username" placeholder="Enter your username" required>
+
+            @if (registerForm.get('userName')?.errors && registerForm.get('userName')?.touched)
+            {
+              <div class="alert alert-danger w-100">
+                @if (registerForm.get('userName')?.getError('required') )
+                {
+                  <p class="m-0">userName Is Required</p>
+                }
+              </div>
+            }
+
+          </div>
+
+          <!-- <div class="mb-3">
+            <label for="image" class="form-label">Profile Image</label>
+            <div class="input-group">
+              <input formControlName="profilePicUrl" type="file" class="form-control" id="image" aria-label="Upload">
+            </div>
+          </div> -->
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input formControlName="password" type="password" class="form-control w-100" id="password" placeholder="Password" required>
+
+            @if (registerForm.get('password')?.errors && registerForm.get('password')?.touched)
+            {
+              <div class="alert alert-danger w-100">
+                @if (registerForm.get('password')?.getError('required') )
+                {
+                  <p class="m-0">password Is Required</p>
+                }
+                @else if (registerForm.get('password')?.getError('pattern'))
+                {
+                  <p class="m-0">Password must be at least 6 characters long, include at least one digit (0-9), and contain at least one uppercase letter (A-Z)</p>
+                }
+              </div>
+            }
+
+          </div>
+
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm password</label>
+            <input formControlName="confirmPassword" type="password" class="form-control w-100" id="confirmPassword" placeholder="Confirm password" required>
+
+            @if (registerForm.getError('mismatch') && registerForm.get('confirmPassword')?.touched)
+            {
+                  <p class="alert alert-danger w-100 m-0">password Confirmation Is Incorrect</p>
+            }
+
+          </div>
+
+          <button type="submit" [disabled]="isLoading" class="btn btn-custom">Create new account
+            @if (isLoading) {
+              <span> <i class="fas fa-spin fa-spinner"></i></span>
+            }
+          </button>
+
+          @if (msgError)
+          {
+            <p class="alert alert-danger"> {{msgError}} </p>
+          }
+
+          <div class="login-link text-center">
+            Already have an account? <a routerLink="/login">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

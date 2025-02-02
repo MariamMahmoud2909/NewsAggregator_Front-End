@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@fontsource/roboto';
+
+:root {
+  --main-color: #3281CA;
+  --secondary-color: #09415A;
+  --dark-color: #052737;
+  --font-family: 'Roboto', sans-serif;
+}
+
+.cursor{
+  cursor: pointer;
+}
+

@@ -1,0 +1,50 @@
+<app-sentiment-nav></app-sentiment-nav>
+<!-- image section -->
+<section class="Categories-image position-relative d-flex flex-column align-items-center justify-content-center text-center text-white">
+  <div class="image-container position-relative w-100 h-100 overflow-hidden">
+    <div class="image-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <img src="../../../assets/images/Rectangle 74.jpg" alt="Blog Image">
+  </div>
+  <div class="categories-image-content position-absolute z-2">
+    <h1 class="fs-1">Categories Page</h1>
+  </div>
+</section>
+
+<!-- categories cards section -->
+<section class="container mt-3">
+  <div class="row g-3">
+      @for (Savednews of savedNews; track $index) {
+        <div class="col-md-3">
+            <div class="p-2" (click)="goToArticle(Savednews._Id)" style="cursor: pointer;">
+                <div class="position-relative image-wrapper">
+                    <i
+                        class="fa-solid fa-bookmark bookmark-icon"
+                        (click)="removeFromBookmarks(Savednews._Id)"
+                    ></i>
+                    <img [src]="Savednews.media" class="card-img object-fit-cover" height="245px" alt="name">
+                    <p class="position-absolute category-name text-white">{{Savednews.topic}}</p>
+                </div>
+                <h4 class="h6 mt-3">{{ Savednews.title.slice(0,50) }}...</h4>
+                <div class="d-flex align-items-center justify-content-between">
+                    <ng-container *ngIf="Savednews.author; else noAuthor">
+                        <small class="text-secondary">By {{ Savednews.author }}</small>
+                      </ng-container>
+                      <ng-template #noAuthor>
+                        <small class="text-secondary">{{Savednews.published_Date}}</small>
+                      </ng-template>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <i
+                            class="fs-5 px-2"
+                            [ngClass]="favoriteStates[Savednews._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                            (click)="toggleFavorite(Savednews._Id)"
+                        ></i>
+                        <i class="fa-regular fa-comment fs-5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+      }
+  </div>
+
+
+</section>

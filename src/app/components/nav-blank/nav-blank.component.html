@@ -1,0 +1,78 @@
+<!-- Trending Bar -->
+<div class="trending-bar d-flex justify-content-between align-items-center">
+  <div>
+    <strong>TRENDING:</strong> Travel Guide: Where to eat, sleep and sight-see in Vienne, France
+  </div>
+  <div class="social-icons">
+    <a href="#" aria-label="Facebook">
+      <i class="fa-brands fa-facebook"></i>
+    </a>
+    <a href="#" aria-label="Twitter">
+      <i class="fa-brands fa-twitter"></i>
+    </a>
+    <a href="#" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-white border-bottom py-2">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <a class="navbar-brand me-auto" routerLink="home">
+      <img src="../../../assets/images/logo1.png" alt="Logo" style="height: 40px;">
+    </a>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Links and Icons -->
+    <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active-link" routerLink="home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active-link" routerLink="savednews">Saved News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active-link" routerLink="contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Icons -->
+    <div class="d-flex ms-auto">
+      <a href="#" class="text-dark me-3">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="#" class="text-dark me-3">
+        <i class="fa fa-bell"></i>
+      </a>
+
+      <!-- List Icon with Dropdown -->
+      <div class="dropdown">
+        <a href="#" class="text-dark dropdown-toggle " id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa fa-list"></i>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="dropdownMenuButton">
+          <li class="pe-3"><a class="dropdown-item no-hover pe-5" href="#"> <img src="../../../assets/images/oo.jpg" class="rounded-circle w-50 pe-2" alt=""> {{name}} </a></li>
+          <hr class="w-75 mx-auto">
+          <li><a class="dropdown-item" routerLink="/edit-profile"><i class="fa fa-cogs fa-menu pe-2"></i> Settings</a></li>
+          <li><a class="dropdown-item" href="#"><i class="fa fa-moon fa-menu pe-2"></i> Darkmode</a></li>
+          <hr class="w-75 mx-auto">
+          <li ><a class="dropdown-item cursor" (click)="logout()"><i class="fa fa-sign-out-alt fa-menu pe-2"></i> Signout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

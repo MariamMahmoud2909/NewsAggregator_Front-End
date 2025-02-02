@@ -1,0 +1,74 @@
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.btn-grey{
+  background-color: rgb(245, 242, 242);
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%; /* Responsive width */
+  max-width: 400px; /* Optional: limit max size for large screens */
+}
+
+.card-img {
+  width: 100%; /* Make the image responsive */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+}
+
+.bookmark-icon {
+  position: absolute;
+  top: 10px; /* Adjust for spacing */
+  left: 10px; /* Adjust for spacing */
+  font-size: 16px; /* Adjust size of the icon */
+  background-color: #ffffffcc; /* Semi-transparent background */
+  border-radius: 50%; /* Rounded background */
+  padding: 7px; /* Spacing inside the icon */
+  z-index: 10; /* Ensure it appears above the image */
+  cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+@media (max-width: 768px) {
+  .bookmark-icon {
+      // font-size: 20px; /* Adjust icon size for smaller screens */
+      top: 5px; /* Adjust spacing */
+      left: 5px; /* Adjust spacing */
+  }
+
+  .category-name {
+      font-size: 12px; /* Adjust text size for smaller screens */
+  }
+}
+
+.category-name{
+  left:0;
+  top: 86%;
+  background-color:rgba(0, 0, 0, 0.8);
+  padding-inline: 10px;
+  padding-block: 5px;
+}
+
+@media (max-width: 768px) {
+  .category-name {
+    top:93%
+  }
+}
+
+@media (max-width: 590px) {
+  .category-name {
+    top:91%
+  }
+}
+
+.bg-story{
+  background-color:#FDF8F0;
+}

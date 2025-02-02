@@ -1,0 +1,283 @@
+<app-sentiment-nav></app-sentiment-nav>
+
+<section class="container">
+  <section class="mt-4">
+    <h3>Recent News</h3>
+    <hr>
+    <div class="mb-3">
+      <div class="row g-3">
+        <!-- Left Column -->
+        <div class="col-md-7 position-relative" *ngIf="recentNews.length > 0">
+          <img [src]="recentNews[0].media" class="card-img" height="500px" alt="Main Image">
+          <p class="position-absolute recent-news-big text-white text-uppercase">{{ recentNews[0].topic }}</p>
+          <div class="big-image-overlay">
+            <h4 class="overlay-title w-75 text-decoration-underline">{{ recentNews[0].title.slice(0,70) }}</h4>
+            <div class="d-flex">
+              <p class="overlay-date w-25">{{recentNews[0].published_Date}}</p>
+              <small class="overlay-date w-25" *ngIf="recentNews[0].author">By {{ recentNews[0].author }}</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column with Scrollable Cards -->
+        <div class="col-md-5 mt-3">
+          <div class="scrollable-cards">
+            <div *ngFor="let news of recentNews.slice(1, 7)" class="mb-2 bg-card card-wrapper">
+              <div class="row gx-2">
+                <div class="col-md-4 position-relative">
+                  <img [src]="news.media" class="w-100 object-fit-cover" height="120px" alt="Card Image">
+                  <p class="position-absolute recent-news text-white text-uppercase">{{ news.topic }}</p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="card-text text-decoration-underline text-uppercase">{{ news.title.slice(0,55) }}...</p>
+                    <p class="card-text d-flex ">
+                      <small class="text-body-secondary w-50">{{ news.published_Date}}</small>
+                      <small *ngIf="news.author">By {{ news.author }}</small>
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-end mt-3 me-3">
+                    <i
+                      class="fs-5 px-2"
+                      [ngClass]="favoriteStates[news._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                      (click)="toggleFavorite(news._Id)"
+                    ></i>
+
+                    <i class="fa-regular fa-comment fs-5"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of Scrollable Cards -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending News -->
+  <section class="mt-5">
+    <h3>Trending News</h3>
+    <hr>
+    <div class="mb-3">
+      <div class="row g-3">
+        <div class="col-md-8 position-relative" *ngIf="trendingNews.length > 0">
+          <img [src]="trendingNews[0].media" class="card-img" height="520px" alt="Main Image">
+          <div class="card-body">
+            <div class="text-container">
+              <span class="dynamic-text-bg">{{ trendingNews[0].topic }}</span>
+            </div>
+            <p class="card-text fw-bold">{{ trendingNews[0].title }}</p>
+            <div class="d-flex text-comments">
+              <small>By {{ trendingNews[0].author }}</small>
+              <small class="ms-4">{{ trendingNews[0].published_Date}}</small>
+              <button class="btn d-flex py-0 m-0 border-0 ms-3">
+                <i
+                      class="fs-5 px-2"
+                      [ngClass]="favoriteStates[trendingNews[0]._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                      (click)="toggleFavorite(trendingNews[0]._Id)"
+                    ></i>
+                <i class="fa-regular fa-comment fs-5 me-2 text-comments"></i>
+                <p class="text-comments">Comments</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column with Scrollable Cards -->
+        <div class="col-md-4 mt-3">
+          <div *ngFor="let news of trendingNews.slice(1, 3)">
+            <img [src]="news.media" class="card-img-top object-fit-cover" height="175px" alt="...">
+            <div class="card-body">
+              <div class="text-container">
+                <span class="dynamic-text-bg">{{ news.topic }}</span>
+              </div>
+              <p class="card-text fw-bold">{{ news.title }}</p>
+              <div class="d-flex justify-content-between text-comments">
+                <small>{{ news.published_Date}}</small>
+                <div class="d-flex">
+                  <i
+                  class="fs-5"
+                  [ngClass]="favoriteStates[news._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                  (click)="toggleFavorite(news._Id)"
+                  ></i>
+                  <button class="btn d-flex py-0 m-0 border-0 text-comments">
+                    <i class="fa-regular fa-comment fs-5 me-2"></i>
+                    <p class="">Comments</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- More News -->
+  <section class="mt-4">
+    <h3>More News</h3>
+    <hr>
+    <div class="row g-3">
+      <div *ngFor="let news of otherNews.slice(0, 12)" class="col-md-3">
+        <div class="p-2">
+          <div class="position-relative image-wrapper">
+            <i class="bookmark-icon"
+              [ngClass]="isBookmarked(news._Id) ? 'fa-solid fa-bookmark text-black' : 'fa-regular fa-bookmark text-gray'"
+              (click)="toggleBookmark($event, news._Id)">
+            </i>
+            <img [src]="news.media" class="card-img object-fit-cover" height="245px" alt="name">
+            <p class="position-absolute category-name text-white">{{ news.topic }}</p>
+          </div>
+          <h4 class="h6 mt-3">{{ news.title.slice(0,50) }}...</h4>
+          <div class="d-flex align-items-center justify-content-between">
+            <ng-container *ngIf="news.author; else noAuthor">
+              <small class="text-secondary">By {{ news.author }}</small>
+            </ng-container>
+            <ng-template #noAuthor>
+              <small class="text-secondary">{{news.published_Date}}</small>
+            </ng-template>
+            <div class="d-flex align-items-center justify-content-between">
+              <i
+              class="fs-5 px-2"
+              [ngClass]="favoriteStates[news._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+              (click)="toggleFavorite(news._Id)"
+              ></i>
+              <i class="fa-regular fa-comment fs-5"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- categories -->
+<section class="mt-5">
+  <div class="row">
+    <!-- General Category -->
+    <div class="col-md-4" *ngFor="let category of categories | keyvalue">
+      <h4 class="text-capitalize">{{ category.key }}</h4>
+      <div class="mb-4 bg-card" *ngFor="let news of category.value">
+        <div class="row">
+          <div class="col-md-4 position-relative">
+            <img [src]="news.media" class="w-100 object-fit-cover" height="100px" alt="Card Image">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <p class="card-text text-decoration-underline text-uppercase mt-4">{{ news.title.slice(0,35)}}...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- More categories -->
+   <section class="mt-5">
+    <h3>More Categories</h3>
+    <hr>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div *ngFor="let news of otherNews.slice(0, 2); let i = index" class="col-md-6 p-0">
+            <div class="product px-2">
+              <div class="position-relative image-wrapper">
+                <img [src]="news.media" class="card-img" height="250px" alt="name">
+                <p class="position-absolute category-name-home text-white">{{ news.topic }}</p>
+              </div>
+              <h4 class="h6 mt-1">{{ news.title.slice(0, 75) }}...</h4>
+              <div class="d-flex align-items-center justify-content-between">
+                <button
+                  class="btn fs-6 ps-1 me-auto fw-bold"
+                  (click)="onAddCategory(news._Id, news.topic)"
+                  [disabled]="categoryStates[news._Id + '' + news.topic]"
+                >
+                  <i *ngIf="!categoryStates[news._Id + '' + news.topic]" class="fa-solid fa-plus fs-5"></i>
+                  {{ categoryStates[news._Id + '' + news.topic] ? 'Category Added' : 'Add Category' }}
+                </button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-1">
+          <div *ngFor="let news of otherNews.slice(2, 6); let i = index" class="col-md-6">
+            <div class="mb-2">
+              <div class="row gx-2">
+                <div class="col-md-4 position-relative">
+                  <img [src]="news.media" class="w-100 object-fit-cover" height="90px" alt="Card Image">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <p class="text-body-secondary text-uppercase mb-0">{{ news.topic }}</p> <!-- Displaying Unique Category -->
+                    <p class="card-text text-decoration-underline text-uppercase">
+                      {{ news.title.slice(0, 35) }}...
+                    </p>
+                  </div>
+                  <button
+                  class="btn fs-6 ps-1 me-auto fw-bold"
+                  (click)="onAddCategory(news._Id, news.topic)"
+                  [disabled]="categoryStates[news._Id + '' + news.topic]"
+                >
+                  <i *ngIf="!categoryStates[news._Id + '' + news.topic]" class="fa-solid fa-plus fs-5"></i>
+                  {{ categoryStates[news._Id + '' + news.topic] ? 'Category Added' : 'Add Category' }}
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-4 ">
+        <div class="card shadow-sm bg-card rounded-0" >
+          <!-- Card Header -->
+          <div class="card-header bg-survey text-white text-center rounded-0">
+            <h5 class="mb-0 py-4">Feedback Survey</h5>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body ">
+            <form>
+              <!-- Question 1 -->
+              <div class="mb-3">
+                <label for="question1" class="form-label fw-semibold">
+                  1. How did you find out about our news website?
+                </label>
+                <input type="text" class="form-control" id="question1" placeholder="Enter your answer">
+              </div>
+              <!-- Question 2 -->
+              <div class="mb-3">
+                <label for="question2" class="form-label fw-semibold">
+                  2. How often do you visit news websites?
+                </label>
+                <input type="text" class="form-control" id="question2" placeholder="Enter your answer">
+              </div>
+              <!-- Question 3 -->
+              <div class="mb-3">
+                <label for="question3" class="form-label fw-semibold">
+                  3. Is the website loading speed satisfactory?
+                </label>
+                <input type="text" class="form-control" id="question3" placeholder="Enter your answer">
+              </div>
+              <!-- Question 4 -->
+              <div class="mb-3">
+                <label for="question4" class="form-label fw-semibold">
+                  4. How easy is it to navigate our website?
+                </label>
+                <input type="text" class="form-control" id="question4" placeholder="Enter your answer">
+              </div>
+              <!-- Submit Button -->
+              <div class="text-center">
+                <button type="submit" class="btn bg-survey text-white w-100">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+   </section>
+</section>

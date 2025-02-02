@@ -1,0 +1,47 @@
+<div class="container d-flex align-items-center justify-content-center pb-3">
+  <div class="row w-100">
+    <div class="w-100 d-flex justify-content-center align-items-center pt-3">
+      <!-- Make the form container wider, using col-lg-8 or col-xl-10 -->
+      <div class="form-container col-lg-8 col-xl-10 ">
+        <div class="text-center mb-3">
+          <img src="../../../assets/images/logo2.png" alt="Logo" width="70px" class="mb-2">
+          <h1 class="form-title">Login</h1>
+          <p class="form-text">Add your details below to get back into the app</p>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input formControlName="userName" type="text" class="form-control w-100" id="username" placeholder="Enter your username" required>
+
+          </div>
+
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input formControlName="password" type="password" class="form-control w-100" id="password" placeholder="Password" required>
+          </div>
+
+
+          <button type="submit" class="btn btn-custom" [disabled]="isLoading">Login
+            @if (isLoading) {
+              <span> <i class="fas fa-spin fa-spinner"></i></span>
+            }
+          </button>
+          <div class="login-link text-center pt-0 mt-1">
+            <a class="text-decoration-none" routerLink="/forgetpassword">Forget Password?</a>
+          </div>
+
+          @if (msgError)
+          {
+            <p class="alert alert-danger"> {{msgError}} </p>
+          }
+
+          <div class="login-link text-center">
+            Don’t have an account? <a routerLink="/register">Create account</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

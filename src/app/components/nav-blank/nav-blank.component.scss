@@ -1,0 +1,63 @@
+.trending-bar {
+  background-color: #09415a;
+  color: white;
+  font-size: 12px;
+  padding: 5px 15px;
+}
+.navbar-brand img {
+  height: 40px; /* Adjust logo height */
+}
+.social-icons {
+  display: flex;
+  gap: 15px; /* Adjust spacing between icons */
+  align-items: center;
+}
+.social-icons i {
+  font-size: 17px; /* Icon size */
+  color: white; /* Icon color */
+  transition: color 0.3s, transform 0.3s; /* Smooth hover effect */
+}
+.social-icons i:hover {
+  color: #3281ca; /* Change color on hover */
+  transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+
+.social-icons a {
+  text-decoration: none; /* Remove underline for links */
+}
+.nav-link {
+  font-size: 16px; /* Adjust font size */
+  font-weight: 500;
+  color: #09415A !important; /* Customize link color */
+  padding-left: 10px; /* Reduced spacing */
+  padding-right: 10px; /* Reduced spacing */
+}
+
+.nav-link:hover {
+  color: #5590c7 !important; /* Add hover effect */
+}
+
+i.fa {
+  font-size: 20px; /* Adjust icon size */
+  margin-right: 20px; /* Increased spacing */
+}
+
+i.fa:last-child {
+  margin-right: 0; /* Remove margin for the last icon */
+}
+.active-link{
+  color: #3281ca !important;
+}
+.dropdown-toggle{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.dropdown-toggle::after {
+  display: none !important;
+}
+.no-hover:hover{
+  background-color: #fff;
+}
+.fa-menu{
+  color: #424242cc  !important;
+}

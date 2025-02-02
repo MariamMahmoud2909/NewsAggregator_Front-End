@@ -1,0 +1,43 @@
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.category-name{
+  left:0;
+  top: 86%;
+  background-color:rgba(0, 0, 0, 0.8);
+  padding-inline: 10px;
+  padding-block: 5px;
+}
+
+@media (max-width: 768px) {
+  .category-name {
+    top:93%
+  }
+}
+
+@media (max-width: 590px) {
+  .category-name {
+    top:91%
+  }
+}
+
+
+.image-wrapper {
+  position: relative;
+  width: 100%; /* Responsive width */
+  max-width: 400px; /* Optional: limit max size for large screens */
+}
+
+.card-img {
+  width: 100%; /* Make the image responsive */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+}

@@ -1,0 +1,49 @@
+
+<!-- image section -->
+<section class="Categories-image position-relative d-flex flex-column align-items-center justify-content-center text-center text-white">
+  <div class="image-container position-relative w-100 h-100 overflow-hidden">
+    <div class="image-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <img src="../../../assets/images/Rectangle 74.jpg" alt="Blog Image">
+  </div>
+  <div class="categories-image-content position-absolute z-2">
+    <h1 class="fs-1">Categories Page</h1>
+  </div>
+</section>
+
+<!-- categories cards section -->
+<section class="container mt-3">
+  <div class="row g-3">
+      @for (category of categories; track $index) {
+          <div class="col-md-3">
+              <div class="product p-2">
+                  <div class="position-relative image-wrapper">
+                      <img [src]="getImageForCategory(category)" class="card-img" alt="name">
+                      <p class="position-absolute category-name text-white">{{category}}</p>
+                  </div>
+                  <h4 class="h6 mt-3">Travel Guide: Where to eat, sleep and sight-see in Vienne, France</h4>
+                  <button
+                          class="btn fs-6 ps-1 me-auto fw-bold"
+                          (click)="addcategory(category)"
+                          [disabled]="categoryStates[category]"
+                        >
+                          <i *ngIf="!categoryStates[category]" class="fa-solid fa-plus fs-5"></i>
+
+                          {{ categoryStates[category] ? 'Category Added' : 'Add Category' }}
+                        </button>
+              </div>
+          </div>
+      }
+  </div>
+
+                  <!-- <div class="col-md-3">
+          <div class="product p-2">
+              <i  class="fa-heart fa-xl text-main"></i>
+              <div class="position-relative">
+                  <img src="./assets/images/Rectangle 25.png" class="card-img" alt="name">
+                  <p class="position-absolute category-name text-white">Sports</p>
+              </div>
+              <h4 class="h6 mt-3">Travel Guide: Where to eat, sleep and sight-see in Vienne, France</h4>
+              <button class="btn btn-primary w-100">Add Category</button>
+          </div>
+      </div> -->
+</section>

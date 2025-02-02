@@ -1,0 +1,34 @@
+<div class="container mt-4">
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <!-- <th><input type="checkbox"></th> -->
+                <th>Username</th>
+                <th>Comment</th>
+                <th>Status</th>
+                <th>Comment Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          @for (comment of commentsList; track comment.id) {
+            <tr>
+                <!-- <td><input type="checkbox"></td> -->
+                <td> {{comment.user.userName}} </td>
+                <td><strong> {{comment.content}} </strong></td>
+                <td> {{comment.user.lockoutEnd ? 'Locked user' : 'Unlocked user'}} </td>
+                <td> {{comment.createdAt}} </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Action</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item cursor" (click)="deleteComment(comment.id)"> Delete Comment</a></li>
+                            <li><a class="dropdown-item cursor" (click)="comment.user.lockoutEnd ? unlockUser(comment.user.id) : lockUser(comment.user.id)">  {{comment.user.lockoutEnd ? 'Unlock' : 'Lock'}} </a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+          }
+        </tbody>
+    </table>
+</div>

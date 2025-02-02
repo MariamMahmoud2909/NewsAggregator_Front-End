@@ -1,0 +1,101 @@
+<div class="container mt-5 mb-5">
+  <div class="card p-4 shadow">
+    <div class="row">
+      <!-- Profile Info -->
+      <div class="col-md-4 d-flex align-items-center">
+        <div class="position-relative">
+          <!-- Profile Image -->
+          <img
+            src="../../../assets/images/oo.jpg"
+            alt="Profile"
+            width="100"
+            class="rounded-circle me-3"
+          />
+          <!-- Edit Icon -->
+          <i
+            class="fa fa-edit position-absolute text-primary"
+            style="bottom: 15px; right: 15px; font-size: 18px; cursor: pointer;"
+            title="Edit Profile Picture"
+          ></i>
+        </div>
+        <div>
+          <h4>Edit your profile</h4>
+          <p class="text-muted mb-0">Davidheregmail.com</p>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <form>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            placeholder="David"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            placeholder="Here"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          placeholder="david_here"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Davidhere@gmail.com"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="oldPassword" class="form-label">Old password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="oldPassword"
+          placeholder="********"/>
+      </div>
+      <div class="mb-3">
+        <label for="newPassword" class="form-label">New password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="newPassword"
+          placeholder="Enter your new password"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="confirmPassword" class="form-label">Confirm new password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="confirmPassword"
+          placeholder="Confirm your new password"
+        />
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-secondary me-2">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

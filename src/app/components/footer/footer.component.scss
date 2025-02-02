@@ -1,0 +1,21 @@
+footer {
+  background-color: #052737; /* Dark blue background */
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer a:hover {
+  transform: scale(1.1);
+}
+
+footer h4 {
+  border-bottom: 1px solid #3281CA; /* Divider under headings */
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.btn-outline-light:hover {
+  transform: scale(1.1);
+}

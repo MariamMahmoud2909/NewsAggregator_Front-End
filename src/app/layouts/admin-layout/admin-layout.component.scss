@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.d-flex {
+  height: 100vh;
+}
+
+
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 250px; /* Ensures content appears after the sidebar */
+  // margin-top: 10px; /* Ensures content appears below the navbar */
+  padding-inline: 20px;
+  // overflow-y: auto;
+}
+

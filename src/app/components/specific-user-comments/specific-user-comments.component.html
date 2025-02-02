@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <div class="d-flex align-items-center mb-4">
+    @for (user of usersList; track user.id) {
+      @if (user.id == idUser) {
+        <img src="../../../assets/images/oo.jpg" class="rounded-circle me-3" width="60" alt="User Profile">
+      <div>
+        <h4 class="mb-0"> {{user.userName}} </h4>
+        <p class="text-muted mb-0"> {{user.email}} </p>
+        <p [ngClass]="user.isLockedOut ? 'text-success' : 'text-muted'">
+          {{ user.isLockedOut ? 'Locked account' : 'Unlocked account' }}
+        </p>
+      </div>
+      }
+    }
+  </div>
+
+  <table class="table align-middle">
+      <thead class="table-light">
+          <tr>
+              <th>Comment</th>
+              <th>Comment Date</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+        @for (comment of specificUserCommentsList; track comment.id) {
+          <tr>
+            <td><strong> {{comment.content}} </strong></td>
+            <td> {{comment.createdAt}} </td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Action</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"> Delete Comment</a></li>
+                        <li><a class="dropdown-item" href="#"> Lock user</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        }
+      </tbody>
+  </table>
+</div>

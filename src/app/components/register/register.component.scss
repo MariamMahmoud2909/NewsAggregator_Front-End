@@ -1,0 +1,97 @@
+/* General Styles */
+html, body {
+
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  overflow: hidden; /* Prevent scrolling */
+  background-color: #f8f9fa;
+}
+
+/* Full height container */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs-7 {
+  font-size: 12px;
+}
+
+/* Form Container Styling */
+.form-container {
+  max-width: 900px; /* Increase max-width for larger form */
+  width: 100%;
+  background-color: #ffffff;
+  padding: 2rem; /* Increased padding for better spacing */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styling */
+.btn-custom {
+  background-color: var(--main-color);
+  color: #fff;
+  width: 100%;
+  padding: 0.6rem; /* Adjusted button padding */
+  border-radius: 5px;
+  font-size: 1rem; /* Slightly larger font size for the button */
+}
+
+.btn-custom:hover {
+  opacity: 0.9;
+}
+
+
+
+/* Form Title and Text */
+.form-title {
+  font-size: 1.5rem; /* Slightly larger form title */
+  margin-bottom: 0.5rem; /* Increased bottom margin */
+}
+
+.form-text {
+  font-size: 1rem; /* Increased subtitle font size */
+  margin-bottom: 1.5rem; /* Increased spacing for a more open feel */
+}
+
+
+
+.input-group .form-control {
+  height: 2.5rem; /* Increased height for input fields */
+}
+
+
+
+/* Row Styling */
+.row.g-2 {
+  gap: 1rem; /* Increased gap between fields */
+}
+
+/* Login Link Styling */
+.login-link {
+  margin-top: 1rem; /* Increased spacing above login link */
+  font-size: 1rem; /* Slightly larger font size for link text */
+}
+
+/* Input Fields Width */
+input, select, .form-control {
+  width: 100%; /* Ensure inputs stretch to fill the container */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .form-container {
+    max-width: 100%; /* Ensure form takes full width on smaller screens */
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+
+  .btn-custom {
+    font-size: 0.9rem; /* Slightly smaller font size on mobile */
+    padding: 0.5rem; /* Adjust button padding for mobile */
+  }
+
+  .form-title {
+    font-size: 1.2rem; /* Smaller title on mobile */
+  }
+}
