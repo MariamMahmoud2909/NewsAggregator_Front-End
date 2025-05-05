@@ -20,6 +20,13 @@ export class AdminService {
     });
   }
 
+  getSurvey(): Observable<any> {
+    const token = localStorage.getItem('userToken');
+    return this._HttpClient.get(`${environment.baseUrl}/api/admin/all-surveys`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
   getAllComments(): Observable<any> {
     const token = localStorage.getItem('userToken');
     return this._HttpClient.get(`${environment.baseUrl}/api/comment`, {
@@ -37,6 +44,13 @@ export class AdminService {
   getSpecificUserComments(userId: string | null): Observable<any> {
     const token = localStorage.getItem('userToken');
     return this._HttpClient.get(`${environment.baseUrl}/api/comment/user/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  editComment(userId: string | null, data:object): Observable<any> {
+    const token = localStorage.getItem('userToken');
+    return this._HttpClient.put(`${environment.baseUrl}/api/Comment/comments/${userId}`, data,{
       headers: { Authorization: `Bearer ${token}` }
     });
   }

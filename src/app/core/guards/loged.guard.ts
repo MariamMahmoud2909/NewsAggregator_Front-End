@@ -6,8 +6,14 @@ export const logedGuard: CanActivateFn = (route, state) => {
 
   if(typeof localStorage !== 'undefined'){
     if(localStorage.getItem('userToken') !== null ){
-      _Router.navigate(['/home']);
-      return false;
+      if(localStorage.getItem('userName') !== 'Admin'){
+        _Router.navigate(['/home']);
+        return false;
+      }
+      else{
+        _Router.navigate(['/admin']);
+        return false;
+      }
     }
     else{
       return true;

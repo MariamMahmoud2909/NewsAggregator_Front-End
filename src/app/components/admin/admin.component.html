@@ -22,16 +22,15 @@
                   {{ user.isLockedOut ? 'Unlock this user' : 'Lock this user' }}
                 </a>
               </li>
-
             </ul>
           </div>
 
           <!-- User Image -->
-          <img src="../../../assets/images/oo.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width: 80px; height: 80px;" alt="User">
+          <img [src]="'http://localhost:5069/' + user.profilePicUrl" class="card-img-top rounded-circle mx-auto mt-3" style="width: 80px; height: 80px;" alt="User">
 
           <!-- Card Body -->
           <div class="card-body">
-            <h5 class="card-title cursor"> {{ user.userName }} </h5>
+            <h5 class="card-title cursor text-color"> {{ user.userName }} </h5>
             <p class="text-muted pb-0 cursor"><i class="bi bi-envelope"></i> {{ user.email }} </p>
             <p class="pt-0 cursor" [ngClass]="user.isLockedOut ? 'text-success' : 'text-muted'">
               <i class="me-2 cursor" [ngClass]="user.isLockedOut ? 'bi bi-lock' : 'bi bi-unlock'"></i>

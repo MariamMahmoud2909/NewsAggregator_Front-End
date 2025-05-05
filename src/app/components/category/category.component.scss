@@ -1,0 +1,62 @@
+.bookmark-icon {
+  position: absolute;
+  top: 10px; /* Adjust for spacing */
+  left: 10px; /* Adjust for spacing */
+  font-size: 16px; /* Adjust size of the icon */
+  background-color: var(--bookmark); /* Semi-transparent background */
+  border-radius: 50%; /* Rounded background */
+  padding: 10px; /* Spacing inside the icon */
+  z-index: 10; /* Ensure it appears above the image */
+  cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+@media (max-width: 768px) {
+  .bookmark-icon {
+      // font-size: 20px; /* Adjust icon size for smaller screens */
+      top: 5px; /* Adjust spacing */
+      left: 5px; /* Adjust spacing */
+  }
+
+  .category-name {
+      font-size: 12px; /* Adjust text size for smaller screens */
+  }
+}
+
+.category-name{
+  left:0;
+  top: 86%;
+  background-color:rgba(0, 0, 0, 0.8);
+  padding-inline: 10px;
+  padding-block: 5px;
+}
+
+@media (max-width: 768px) {
+  .category-name {
+    top:93%
+  }
+}
+
+@media (max-width: 590px) {
+  .category-name {
+    top:91%
+  }
+}
+
+.text-comments{
+  color: var(--text-comments);
+}
+
+.category-image {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+//   .card-wrapper {
+//     background: #f8f9fa;
+//     border: 1px solid #ddd;
+//     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+//     transition: box-shadow 0.3s ease;
+//   }

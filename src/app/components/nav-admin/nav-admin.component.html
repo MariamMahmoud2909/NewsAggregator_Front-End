@@ -2,54 +2,78 @@
         <!-- Sidebar -->
         <div class="sidebar d-flex flex-column">
             <div class="text-center mb-4">
-                <img src="../../../assets/images/oo.jpg" class="rounded-circle" width="100" alt="Profile">
-                <h5 class="mt-2">{{ name }}</h5>
+              @for (user of userInfo; track user.id){
+                <img [src]="'http://localhost:5069/' + user.profilePicUrl" class="rounded-circle" width="100" alt="Profile">
+                <h5 class="mt-2">{{ user.userName }}</h5>
+              }
             </div>
             <ul class="nav flex-column">
-              <li class="">
+                <li class="">
                 <a class="nav-link active text-primary d-flex justify-content-between cursor">  All Users <span class="badge bg-secondary py-1 px-2"> {{userCount}} </span></a>
             </li>
             <li class="">
                 <a class="nav-link active text-primary d-flex justify-content-between cursor"> All Comments <span class="badge bg-secondary py-1 px-2"> {{commentCount}} </span> </a>
-              </li>
+                </li>
             </ul>
             <hr>
             <ul class="nav flex-column">
-              <li class="nav-item">
-                  <a class="nav-link d-flex" routerLinkActive="active-link" routerLink="admin">
-                      <i class="bi bi-person me-2"></i>
-                      <span>All Users</span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link d-flex" routerLinkActive="active-link" routerLink="comments">
-                      <i class="bi bi-chat-left-text me-2"></i>
-                      <span>All Comments</span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link d-flex" routerLinkActive="active-link" routerLink="admin-settings">
-                      <i class="bi bi-gear me-2"></i>
-                      <span>Settings</span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link d-flex text-danger" routerLinkActive="active-link" routerLink="logout" (click)="logout()">
-                      <i class="bi bi-box-arrow-right me-2"></i>
-                      <span>Sign Out</span>
-                  </a>
-              </li>
-          </ul>
+                <li class="nav-item">
+                    <a class="nav-link d-flex" routerLinkActive="active-link" routerLink="admin">
+                        <i class="bi bi-person me-2"></i>
+                        <span>All Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex" routerLinkActive="active-link" routerLink="comments">
+                        <i class="bi bi-chat-left-text me-2"></i>
+                        <span>All Comments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex" routerLinkActive="active-link" routerLink="admin-settings">
+                        <i class="me-2 pt-1 fas fa-chart-line"></i>
+                        <span>Graphs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex text-danger" routerLinkActive="active-link" routerLink="logout" (click)="logout()">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content w-100">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm ">
-                <div class="container-fluid">
-                        <img src="../../../assets/images/logo.png" width="80" alt="">
-                        <input class="form-control me-2 w-50" type="search" placeholder="Search" aria-label="Search">
-                </div>
-            </nav>
+        <div class="main-content w-100 position-relative">
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+            <div class="container-fluid">
+              <img src="../../../assets/images/logo1.png" width="11%" alt="">
+
+              <!-- Search Input Container -->
+              <div #searchContainer class="position-relative w-50 d-flex">
+                <input
+                  class="form-control me-2 w-100"
+                  type="search"
+                  placeholder="Search for users..."
+                  aria-label="Search"
+                  (input)="onSearch($event)"
+                  (focus)="showSearchResults = true"/>
+
+                <!-- Search Results Dropdown -->
+                <ul *ngIf="showSearchResults && filteredUsers.length > 0" class="search-results list-group position-absolute w-100 border shadow">
+                  <li *ngFor="let user of filteredUsers" class="list-group-item" [routerLink]="['/specific-user-comments', user.id]">
+                    <img [src]="'http://localhost:5069/' + user.profilePicUrl" class="rounded-circle" alt="" width="5%">
+                    {{ user.userName }}
+                  </li>
+                </ul>
+                <a class="nav-link cursor fs-4" (click)="toggleDarkMode()" routerLinkActive="active-link">
+                  <i class="fa" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                </a>
+              </div>
+            </div>
+          </nav>
         </div>
+
     </div>

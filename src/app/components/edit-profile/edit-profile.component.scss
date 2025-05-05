@@ -1,0 +1,23 @@
+.card{
+    background-color: var(--background-color);
+}
+
+input{
+    background-color: var(--card-bg);
+}
+
+label{
+    color: var(--text-color);
+}
+
+input::placeholder{
+    color: var(--text-color);
+}
+
+.form-control {
+    color: var(--text-color);
+}
+
+.text-color{
+    color: var(--text-muted);
+}

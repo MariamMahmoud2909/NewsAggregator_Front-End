@@ -1,2 +1,119 @@
 <app-sentiment-nav></app-sentiment-nav>
-<p>category works!</p>
+
+<section class="Categories-image position-relative d-flex flex-column align-items-center justify-content-center text-center text-white">
+    <div class="image-container position-relative w-100 overflow-hidden">
+      <div class="image-overlay position-absolute object-fit-cover top-0 start-0 w-100"></div>
+      <img [src]="articleCategory[0].media" class="w-100" alt="Blog Image" hight="70%">
+    </div>
+    <div class="categories-image-content position-absolute z-2">
+      <h1 class="fs-1 text-capitalize">Category : {{categoryName}}</h1>
+    </div>
+</section>
+
+<section class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row">
+                @for (articleNews of articleCategory.slice(0,6); track $index) {
+                    <div class="col-md-6">
+                        <div class="p-2" style="cursor: pointer;">
+                            <div class="position-relative image-wrapper">
+                                <i class="fa-bookmark bookmark-icon"
+   [ngClass]="{
+      'fa-solid': isBookmarked(articleNews._Id),
+      'fa-regular': !isBookmarked(articleNews._Id)
+    }"
+   (click)="toggleBookmark(articleNews._Id, $event)">
+</i>
+                                <img [src]="articleNews.media" class="card-img object-fit-cover" height="245px" alt="name" style="cursor: pointer;" [routerLink]="['/article', articleNews._Id.toString()]">
+                                <p class="position-absolute category-name text-white text-capitalize">{{ getCategoryDisplayName(articleNews.topic) }}</p>
+                            </div>
+                            <h4 class="h6 mt-3">{{articleNews.title.slice(0,30)}}...</h4>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <ng-container *ngIf="articleNews.author; else noAuthor">
+                                    <small class="text-secondary">{{articleNews.author}}</small>
+                                  </ng-container>
+                                  <ng-template #noAuthor>
+                                    <small class="text-secondary">{{articleNews.published_Date}}</small>
+                                  </ng-template>
+                                <div class="d-flex align-items-center justify-content-between">
+              <span style="font-size: 1.2em; margin-bottom: 5px;" class="me-1">{{ likeCounts[articleNews._Id] || 0 }}</span>
+                                    <i class="fs-5 text-comments"
+                [ngClass]="favoriteStates[articleNews._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                (click)="toggleFavorite(articleNews._Id, $event)">
+              </i>
+              <button class="btn d-flex py-0 m-0 border-0 text-comments" (click)="openCommentPopup(articleNews._Id, $event)">
+                                      <i class="fa-regular fa-comment fs-5"></i>
+                                    </button>
+                                    <app-comment-pop-up
+                                      [showComments]="showPopup"
+                                      [articleId]="selectedArticleId"
+                                      (closePopup)="showPopup = false">
+                                    </app-comment-pop-up>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div>
+                <h2>Categories</h2>
+            <hr class="text-secondary">
+            @for (category of categories.slice(1,5); track $index) {
+                @if (category!=categoryName)
+                {
+                    <div class="position-relative text-center py-2" style="cursor: pointer;" [routerLink]="['/category', category]">
+                        <img [src]="getImageForCategory(category)" class="card-img object-fit-cover" height="90px" alt="Sample Image" >
+                        <div class="position-absolute top-50 start-0 translate-middle-y  text-white">
+                            <p class="p-4 text-capitalize">{{ getCategoryDisplayName(category) }}</p>
+                        </div>
+                    </div>
+                }
+            }
+            </div>
+
+            <div class="mt-4">
+                <h3>Latest News</h3>
+                <hr class="text-secondary">
+                @for (latest of Latest.slice(0,4); track $index) {
+                    @if (latest.topic!=categoryName)
+                    {
+                        <div class="row gy-2 card-wrapper py-2">
+                            <div class="col-md-4 position-relative ">
+                              <img [src]="latest.media" class="w-100 object-fit-cover" height="120px" alt="Card Image"  style="cursor: pointer;" [routerLink]="['/article', latest._Id.toString()]">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body mt-2">
+                                <p class="text-capitalize mb-0">{{ getCategoryDisplayName(latest.topic) }}</p>
+                                <p class="card-text text-capitalize mb-0">{{latest.title.slice(0,35)}}</p>
+                               <div class="d-flex justify-content-between">
+                                <p class="card-text d-flex">
+                                    <!-- <small class="text-body-secondary w-50"></small> -->
+                                    <small class="text-primary mt-3 text-comments">By {{latest.author}}</small>
+                                  </p>
+                                  <div class="d-flex justify-content-end me-3 mt-3">
+                                    <i class="fs-5 text-comments"
+                                    [ngClass]="favoriteStates[latest._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                                    (click)="toggleFavorite(latest._Id, $event)">
+                                  </i>
+                                    <button class="btn d-flex py-0 m-0 border-0 text-comments cursor" (click)="openCommentPopup(latest._Id, $event)">
+                                      <i class="fa-regular fa-comment fs-5 text-comments"></i>
+                                    </button>
+                                    <app-comment-pop-up
+                                      [showComments]="showPopup"
+                                      [articleId]="selectedArticleId"
+                                      (closePopup)="showPopup = false">
+                                    </app-comment-pop-up>
+                                 </div>
+                                </div>
+                               </div>
+                            </div>
+                          </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

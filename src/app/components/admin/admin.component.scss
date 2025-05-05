@@ -2,6 +2,7 @@
   border-radius: 12px;
   transition: 0.3s ease-in-out;
   position: relative;
+  background-color: var(--card-bg);
 
   &:hover {
     transform: translateY(-5px);
@@ -16,15 +17,17 @@
 .dropdown-menu {
   min-width: 180px;
   border-radius: 8px;
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 }
 
 .dropdown-item {
   font-size: 14px;
   padding: 8px 12px;
   transition: 0.2s;
-
+  color: var(--text-color) !important;
   &:hover {
-    background-color: #f8f9fa;
+    background-color: var(--dropdown);
   }
 }
 
@@ -32,4 +35,16 @@
   background-color: transparent;
   border: none;
   font-size: 16px;
+}
+
+.text-color{
+  color: var(--text-color);
+}
+
+.text-muted{
+  color: var(--text-muted) !important;
+}
+
+.bi-three-dots{
+  color: var(--text-color);
 }

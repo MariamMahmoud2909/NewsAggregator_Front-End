@@ -3,11 +3,10 @@ import { NavAdminComponent } from '../../components/nav-admin/nav-admin.componen
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-layout',
-  standalone: true,
-  imports: [NavAdminComponent, RouterOutlet],
-  templateUrl: './admin-layout.component.html',
-  styleUrl: './admin-layout.component.scss'
+    selector: 'app-admin-layout',
+    imports: [NavAdminComponent, RouterOutlet],
+    templateUrl: './admin-layout.component.html',
+    styleUrl: './admin-layout.component.scss'
 })
 export class AdminLayoutComponent {
 

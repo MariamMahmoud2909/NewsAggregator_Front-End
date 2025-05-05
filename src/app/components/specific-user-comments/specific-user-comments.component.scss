@@ -1,0 +1,27 @@
+table {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+table th,
+table td {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.dropdown-menu {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.dropdown-item {
+  color: var(--text-color) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--dropdown)!important;
+}
+
+.text-muted{
+    color: var(--text-muted) !important;
+}

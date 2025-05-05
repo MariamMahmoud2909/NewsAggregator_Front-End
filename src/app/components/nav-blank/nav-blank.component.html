@@ -17,7 +17,7 @@
 </div>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-white border-bottom py-2">
+<nav class="navbar navbar-expand-lg border-bottom py-2">
   <div class="container d-flex justify-content-between align-items-center">
     <!-- Logo -->
     <a class="navbar-brand me-auto" routerLink="home">
@@ -38,7 +38,12 @@
     <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active-link" routerLink="home">Home</a>
+          <a 
+          class="nav-link" routerLinkActive="active-link" routerLink="home"
+          [class.disabled]="selectedCategoriesCount < 3" 
+          (click)="goHome($event)">
+          Home
+        </a>        
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active-link" routerLink="savednews">Saved News</a>
@@ -51,26 +56,66 @@
 
     <!-- Icons -->
     <div class="d-flex ms-auto">
-      <a href="#" class="text-dark me-3">
-        <i class="fa fa-search"></i>
-      </a>
-      <a href="#" class="text-dark me-3">
-        <i class="fa fa-bell"></i>
-      </a>
+      <div class="search-container">
+        <input type="text" [(ngModel)]="searchQuery" (input)="filterNews()" placeholder="Search news..." class="search-input"/>
+      
+        <ul *ngIf="showSearchResults && filteredNews.length" class="search-results">
+          <li *ngFor="let news of filteredNews" class="cursor" (click)="selectNews(news)">
+            {{ news.title.slice(0,60) }}...
+          </li>
+        </ul>
+      </div>      
+      
+      <div class="dropdown cursor ">
+        <a class="icon dropdown-toggle" (click)="markNotificationsAsRead()" id="bellDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa fa-bell me-3"></i>
+          @if (notifications !== null) {
+            <span *ngIf="notificationCount > 0" class="badge rounded-pill bg-danger position-absolute top-0 start-0 translate-middle">
+              {{ notificationCount }}
+            </span>
+          }
+        </a>
+        
+        <!-- Dropdown Menu -->
+        <ul class="dropdown-menu dropdown-menu-end notifications-dropdown" aria-labelledby="bellDropdown">
+          @if (notifications == null) {
+            <li class="dropdown-item text-center">There are no notifications</li>
+          }
+          @else {
+            @for (notification of notifications; track notification.id) {
+              <li [routerLink]="['/article', notification.articleId]">
+                <span class="dropdown-item">
+                  <strong>{{ notification.category }}</strong>
+                  <p>{{ notification.articleTitle.slice(0, 30) }}...</p>
+                  <hr>
+                </span>
+              </li>
+            }
+          }
+        </ul>
+      </div>
+
 
       <!-- List Icon with Dropdown -->
-      <div class="dropdown">
-        <a href="#" class="text-dark dropdown-toggle " id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown cursor">
+        <a class="icon dropdown-toggle " id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa fa-list"></i>
         </a>
 
         <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="dropdownMenuButton">
-          <li class="pe-3"><a class="dropdown-item no-hover pe-5" href="#"> <img src="../../../assets/images/oo.jpg" class="rounded-circle w-50 pe-2" alt=""> {{name}} </a></li>
-          <hr class="w-75 mx-auto">
-          <li><a class="dropdown-item" routerLink="/edit-profile"><i class="fa fa-cogs fa-menu pe-2"></i> Settings</a></li>
-          <li><a class="dropdown-item" href="#"><i class="fa fa-moon fa-menu pe-2"></i> Darkmode</a></li>
-          <hr class="w-75 mx-auto">
-          <li ><a class="dropdown-item cursor" (click)="logout()"><i class="fa fa-sign-out-alt fa-menu pe-2"></i> Signout</a></li>
+          @for (user of userInfo; track user.id){
+            <li class="pe-3"><a class="dropdown-item text-comments no-hover pe-5"> <img [src]="'http://localhost:5069/' + user.profilePicUrl" class="rounded-circle w-50 pe-2" alt=""> {{user.userName}} </a></li>
+            <hr class="w-75 mx-auto">
+            <li><a class="dropdown-item list-dropdown list-dropdown" routerLink="/edit-profile"><i class="fa fa-cogs fa-menu pe-2"></i> Settings</a></li>
+            <li (click)="toggleDarkMode()" class="cursor">
+              <a class="dropdown-item list-dropdown">
+                <i class="fa pe-3" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+                {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+              </a>
+            </li>
+            <hr class="w-75 mx-auto">
+            <li ><a class="dropdown-item list-dropdown cursor" (click)="logout()"><i class="fa fa-sign-out-alt fa-menu pe-2"></i> Signout</a></li>
+          }
         </ul>
       </div>
     </div>

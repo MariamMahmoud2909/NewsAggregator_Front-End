@@ -2,15 +2,18 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AdminService } from '../../core/servcies/admin.service';
 import { Icomment } from '../../core/interfaces/icomment';
 import { Iaccount } from '../../core/interfaces/iaccount';
+import { ToastrService } from 'ngx-toastr';
+import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-comments',
-  standalone: true,
-  imports: [],
-  templateUrl: './comments.component.html',
-  styleUrl: './comments.component.scss'
+    selector: 'app-comments',
+    imports: [NgClass],
+    templateUrl: './comments.component.html',
+    styleUrl: './comments.component.scss'
 })
 export class CommentsComponent implements OnInit{
+
+  private readonly _ToastrService = inject(ToastrService);
   private readonly _AdminService = inject(AdminService);
 
     commentsList: Icomment[] = [];
@@ -18,6 +21,16 @@ export class CommentsComponent implements OnInit{
     commentCount: number = 0;
 
   ngOnInit(): void {
+    this.getallcomments();
+  }
+
+  getCommentCount(): void {
+    this._AdminService.getCommentCount().subscribe(count => {
+      this.commentCount = count;
+    });
+}
+
+  getallcomments():void{
     this._AdminService.getAllComments().subscribe({
       next: (res) => {
         console.log(res);
@@ -29,39 +42,32 @@ export class CommentsComponent implements OnInit{
     })
   }
 
-  getCommentCount(): void {
-    this._AdminService.getCommentCount().subscribe(count => {
-      this.commentCount = count;
-    });
-}
-
   deleteComment(commentId: number): void {
-    if (confirm('Are you sure you want to delete this comment?')) {
-      this._AdminService.deleteComment(commentId.toString()).subscribe({
-        next: () => {
-          alert('Comment deleted successfully!');
-          this.getCommentCount();
-          this.commentsList = this.commentsList.filter(comment => comment.id !== commentId);
-        },
-        error: (err) => {
-          console.error('Error deleting comment:', err);
-          alert('Failed to delete comment');
-        }
-      });
-    }
+    this._AdminService.deleteComment(commentId.toString()).subscribe({
+      next: () => {
+        this._ToastrService.success('Comment deleted successfully!', 'Success');
+        this.getallcomments();
+        this._AdminService.getCommentCount().subscribe(count => this.commentCount = count);
+        this.commentsList = this.commentsList.filter(comment => comment.id !== commentId);
+      },
+      error: (err) => {
+        console.error('Error deleting comment:', err);
+        this._ToastrService.error('Failed to delete comment', 'Failed');
+      }
+    });
   }
 
   lockUser(userId: string): void {
     this._AdminService.lockUser(userId).subscribe({
       next: () => {
-        alert('User locked successfully!');
+        this._ToastrService.success('User locked successfully!', 'Success')
         this.usersList = this.usersList.map(user =>
           user.id === userId ? { ...user, isLockedOut: true } : user
         );
       },
       error: (err) => {
         console.error('Error locking user:', err);
-        alert('Failed to lock user');
+        this._ToastrService.error('Failed to lock user', 'Failed');
       }
     });
   }
@@ -69,14 +75,14 @@ export class CommentsComponent implements OnInit{
   unlockUser(userId: string): void {
     this._AdminService.unlockUser(userId).subscribe({
       next: () => {
-        alert('User unlocked successfully!');
+        this._ToastrService.success('User unlocked successfully!', 'Success');
         this.usersList = this.usersList.map(user =>
           user.id === userId ? { ...user, isLockedOut:false} : user
         );
       },
       error: (err) => {
         console.error('Error unlocking user:', err);
-        alert('Failed to unlock user');
+        this._ToastrService.error('Failed to unlock user', 'Failed')
       }
     });
   }

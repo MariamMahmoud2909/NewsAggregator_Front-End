@@ -20,6 +20,7 @@ import { adminGuard } from './core/guards/admin.guard';
 import { CommentsComponent } from './components/comments/comments.component';
 import { SpecificUserCommentsComponent } from './components/specific-user-comments/specific-user-comments.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { CommentPopUpComponent } from './components/comment-pop-up/comment-pop-up.component';
 
 export const routes: Routes = [
   {path:'', component:AuthLayoutComponent, canActivate:[logedGuard], children:[
@@ -35,9 +36,10 @@ export const routes: Routes = [
     {path:'contact', component:ContactComponent},
     {path:'savednews', component:SavedNewsComponent},
     {path:'categories', component:CategoriesComponent},
-    {path:'category', component:CategoryComponent},
+    {path:'category/:categoryName', component:CategoryComponent},
     {path:'article/:id', component:ArticleComponent},
     {path:'edit-profile', component:EditProfileComponent},
+    // {path:'Comment-pop-up', component:CommentPopUpComponent},
   ]},
 
   {path: '', component:AdminLayoutComponent, canActivate:[adminGuard], children:[

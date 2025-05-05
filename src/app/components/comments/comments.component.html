@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <table class="table table-bordered align-middle">
+    <table class="table table-bordered align-middle table-striped">
         <thead class="table-light">
             <tr>
                 <!-- <th><input type="checkbox"></th> -->
@@ -12,18 +12,18 @@
         </thead>
         <tbody>
           @for (comment of commentsList; track comment.id) {
-            <tr>
+            <tr [ngClass]="{'table-danger': comment.containsBadWord}">
                 <!-- <td><input type="checkbox"></td> -->
-                <td> {{comment.user.userName}} </td>
+                <td> {{comment.userName}} </td>
                 <td><strong> {{comment.content}} </strong></td>
-                <td> {{comment.user.lockoutEnd ? 'Locked user' : 'Unlocked user'}} </td>
+                <td> {{comment.isLocked ? 'Locked user' : 'Unlocked user'}} </td>
                 <td> {{comment.createdAt}} </td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Action</button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item cursor" (click)="deleteComment(comment.id)"> Delete Comment</a></li>
-                            <li><a class="dropdown-item cursor" (click)="comment.user.lockoutEnd ? unlockUser(comment.user.id) : lockUser(comment.user.id)">  {{comment.user.lockoutEnd ? 'Unlock' : 'Lock'}} </a></li>
+                            <li><a class="dropdown-item cursor" (click)="comment.isLocked ? unlockUser(comment.userId) : lockUser(comment.userId)">  {{comment.isLocked ? 'Unlock' : 'Lock'}} </a></li>
                         </ul>
                     </div>
                 </td>

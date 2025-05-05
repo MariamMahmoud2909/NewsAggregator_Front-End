@@ -1,0 +1,50 @@
+<div *ngIf="showComments" class="comment-popup-overlay" (click)="closeComments($event)">
+  <div class="comment-popup-box" (click)="$event.stopPropagation()">
+    <div class="comment-popup-header d-flex justify-content-between align-items-center">
+      <h5><i class="fa-regular fa-comment"></i> Comments</h5>
+      <button class="btn-close" (click)="closeComments($event)"></button>
+    </div>
+
+    <div class="comment-popup-content">
+      @if (comments) {
+        <div *ngFor="let comment of comments" class="comment-item position-relative">
+          <!-- three dots  -->
+          @if (comment.userId === userId) {
+            <div class="dropdown position-absolute top-0 start-0 m-2">
+              <button class="btn btn-light btn-sm rounded-circle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li>
+                  <a class="dropdown-item cursor" (click)="startEditing(comment)"> <i class="bi bi-pencil text-primary me-2"></i> Edit Comment </a>
+                </li>
+                <li>
+                  <a class="dropdown-item cursor" (click)="deleteComment(comment.id)"> <i class="bi bi-trash text-danger me-2"></i>Delete Comment </a>
+                </li>
+              </ul>
+            </div>
+          }
+          <img [src]="'http://localhost:5069/' + comment.profilePicUrl" class="rounded-circle" width="15%" height="15%" alt="User">
+          <div class="comment-text">
+            <strong>{{ comment.userName }}</strong> <p class="small pb-0 mb-0">{{ comment.createdAt }}</p>
+            <p class="pt-0 mt-0">{{ comment.content }}</p>
+            <form enctype='multipart/form-data' [formGroup]="editCommentForm" (ngSubmit)="editcomment(comment.id)">
+              <input *ngIf="editCommentId === comment.id" type="text"  class="form-control w-100" [value]="comment.content" formControlName="content" id="content"/>
+              <button *ngIf="editCommentId === comment.id" class="btn btn-success btn-sm mt-1 px-4" (click)="editcomment(comment.id)">Save</button>
+              <button *ngIf="editCommentId === comment.id" class="btn btn-secondary btn-sm ms-2 mt-1 px-4" (click)="editCommentId = null">Cancel</button>
+            </form>
+          </div>
+        </div>
+      }
+      @else {
+        <p>Be the first comment</p>
+      }
+    </div>
+
+    <div class="comment-popup-footer">
+      <form enctype='multipart/form-data' class="w-100" [formGroup]="commentForm" (ngSubmit)="commentSubmit()">
+        <input type="text" formControlName="content" id="content" class="input-group form-control mb-3 w-100" placeholder="Write a comment">
+      </form>
+    </div>
+  </div>
+</div>

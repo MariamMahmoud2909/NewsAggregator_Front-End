@@ -1,101 +1,85 @@
 <div class="container mt-5 mb-5">
   <div class="card p-4 shadow">
+    @for (user of userInfo; track user.id) {
     <div class="row">
       <!-- Profile Info -->
       <div class="col-md-4 d-flex align-items-center">
-        <div class="position-relative">
-          <!-- Profile Image -->
-          <img
-            src="../../../assets/images/oo.jpg"
-            alt="Profile"
-            width="100"
-            class="rounded-circle me-3"
-          />
-          <!-- Edit Icon -->
-          <i
-            class="fa fa-edit position-absolute text-primary"
-            style="bottom: 15px; right: 15px; font-size: 18px; cursor: pointer;"
-            title="Edit Profile Picture"
-          ></i>
-        </div>
-        <div>
-          <h4>Edit your profile</h4>
-          <p class="text-muted mb-0">Davidheregmail.com</p>
-        </div>
-      </div>
-    </div>
-    <hr />
-    <form>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label for="firstName" class="form-label">First Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="firstName"
-            placeholder="David"
-          />
-        </div>
-        <div class="col-md-6">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="lastName"
-            placeholder="Here"
-          />
+          <div class="position-relative">
+            <!-- Profile Image -->
+            <img [src]="'http://localhost:5069/' + user.profilePicUrl" alt="Profile" width="100" class="rounded-circle me-3" />
+            <!-- Edit Icon -->
+            <!-- <form enctype='multipart/form-data' [formGroup]="updateForm" (ngSubmit)="updateSubmit()">
+              <input type="file" #fileInput  (change)="onFileSelected($event)" hidden />
+
+                  <i class="fa fa-edit position-absolute text-primary"
+                    style="bottom: 15px; right: 15px; font-size: 18px; cursor: pointer;"
+                    title="Edit Profile Picture"
+                    (click)="fileInput.click()">
+                  </i>
+            </form> -->
+          </div>
+          <div class="text-color">
+            <h4>Edit your profile</h4>
+            <p class="text-color mb-0"> {{user.email}} </p>
+          </div>
         </div>
       </div>
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          class="form-control"
-          id="username"
-          placeholder="david_here"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          placeholder="Davidhere@gmail.com"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="oldPassword" class="form-label">Old password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="oldPassword"
-          placeholder="********"/>
-      </div>
-      <div class="mb-3">
-        <label for="newPassword" class="form-label">New password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="newPassword"
-          placeholder="Enter your new password"
-        />
-      </div>
-      <div class="mb-4">
-        <label for="confirmPassword" class="form-label">Confirm new password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="confirmPassword"
-          placeholder="Confirm your new password"
-        />
-      </div>
-      <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-outline-secondary me-2">
-          Cancel
+      <hr />
+      <form enctype='multipart/form-data' [formGroup]="updateForm" (ngSubmit)="updateSubmit()">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" formControlName="firstName" id="firstName"/>
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" formControlName="lastName" id="lastName"/>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Profile Picture</label>
+            <input type="file" class="form-control" id="ProfilePicUrl" (change)="onFileSelected($event)" >
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" formControlName="username" id="username" placeholder="david_here" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email" id="email" placeholder="Davidhere@gmail.com" />
+        </div>
+        <div class="mb-3">
+          <label for="oldPassword" class="form-label">Old password</label>
+          <input type="password" class="form-control" formControlName="oldPassword" id="oldPassword" placeholder="Enter the old password"/>
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">New password</label>
+          <input type="password" class="form-control" formControlName="newPassword" id="newPassword" placeholder="Enter your new password" />
+        </div>
+        <div class="mb-4">
+          <label for="confirmPassword" class="form-label">Confirm new password</label>
+          <input type="password" class="form-control" formControlName="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm your new password" />
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-outline-secondary me-2">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Save
+            @if (isLoading) {
+              <span> <i class="fas fa-spin fa-spinner"></i></span>
+            }
+          </button>
+        </div>
+      </form>
+      <hr class="my-4">
+      <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-danger" (click)="deactivateAccount()">
+          Deactivate Account
+          @if (isLoading) {
+            <span> <i class="fas fa-spin fa-spinner"></i></span>
+          }
         </button>
-        <button type="submit" class="btn btn-primary">Save</button>
       </div>
-    </form>
+        }
   </div>
 </div>

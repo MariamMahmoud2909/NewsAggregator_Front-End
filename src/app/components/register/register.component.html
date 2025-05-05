@@ -1,12 +1,12 @@
 <div class="container d-flex align-items-center justify-content-center pb-3">
-  <div class="row w-100">
+  <div class="row w-75">
     <div class="w-100 d-flex justify-content-center align-items-center pt-3">
       <!-- Make the form container wider, using col-lg-8 or col-xl-10 -->
       <div class="form-container col-lg-8 col-xl-10 ">
         <div class="text-center mb-3">
           <img src="../../../assets/images/logo2.png" alt="Logo" width="70px" class="mb-2">
           <h1 class="form-title">Create account</h1>
-          <p class="form-text">Let's get you started sharing your links!</p>
+          <p class="form-text text-comments">Let's get you started sharing your links!</p>
         </div>
         <form enctype='multipart/form-data' [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
           <div class="row g-2">
@@ -89,12 +89,12 @@
 
           </div>
 
-          <!-- <div class="mb-3">
+          <div class="mb-3">
             <label for="image" class="form-label">Profile Image</label>
             <div class="input-group">
-              <input formControlName="profilePicUrl" type="file" class="form-control" id="image" aria-label="Upload">
+              <input type="file" class="form-control" id="image" (change)="onFileSelected($event)">
             </div>
-          </div> -->
+          </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>

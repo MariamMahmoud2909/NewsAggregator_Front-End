@@ -1,5 +1,5 @@
 footer {
-  background-color: #052737; /* Dark blue background */
+  background-color: var(--dark-color); /* Dark blue background */
 }
 
 footer a {
@@ -11,7 +11,7 @@ footer a:hover {
 }
 
 footer h4 {
-  border-bottom: 1px solid #3281CA; /* Divider under headings */
+  border-bottom: 1px solid var(--main-color); /* Divider under headings */
   padding-bottom: 8px;
   margin-bottom: 16px;
 }

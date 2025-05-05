@@ -5,11 +5,10 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-forgetpassword',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './forgetpassword.component.html',
-  styleUrl: './forgetpassword.component.scss'
+    selector: 'app-forgetpassword',
+    imports: [ReactiveFormsModule, RouterLink],
+    templateUrl: './forgetpassword.component.html',
+    styleUrl: './forgetpassword.component.scss'
 })
 export class ForgetpasswordComponent {
 

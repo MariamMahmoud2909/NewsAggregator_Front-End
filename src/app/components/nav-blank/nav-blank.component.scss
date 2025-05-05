@@ -1,9 +1,14 @@
 .trending-bar {
-  background-color: #09415a;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   font-size: 12px;
   padding: 5px 15px;
 }
+
+.navbar{
+  background-color: var(--background-color);
+}
+
 .navbar-brand img {
   height: 40px; /* Adjust logo height */
 }
@@ -14,11 +19,11 @@
 }
 .social-icons i {
   font-size: 17px; /* Icon size */
-  color: white; /* Icon color */
+  color: var(--text-color); /* Icon color */
   transition: color 0.3s, transform 0.3s; /* Smooth hover effect */
 }
 .social-icons i:hover {
-  color: #3281ca; /* Change color on hover */
+  color: var(--main-color); /* Change color on hover */
   transform: scale(1.1); /* Slightly enlarge icon on hover */
 }
 
@@ -28,13 +33,17 @@
 .nav-link {
   font-size: 16px; /* Adjust font size */
   font-weight: 500;
-  color: #09415A !important; /* Customize link color */
+  color: var(--text-color) !important; /* Customize link color */
   padding-left: 10px; /* Reduced spacing */
   padding-right: 10px; /* Reduced spacing */
 }
 
 .nav-link:hover {
-  color: #5590c7 !important; /* Add hover effect */
+  color:var(--main-color) !important; /* Add hover effect */
+}
+
+.icon{
+  color: var(--icon);
 }
 
 i.fa {
@@ -46,7 +55,7 @@ i.fa:last-child {
   margin-right: 0; /* Remove margin for the last icon */
 }
 .active-link{
-  color: #3281ca !important;
+  color: var(--main-color) !important;
 }
 .dropdown-toggle{
   padding: 0 !important;
@@ -56,8 +65,106 @@ i.fa:last-child {
   display: none !important;
 }
 .no-hover:hover{
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 .fa-menu{
-  color: #424242cc  !important;
+  color: var(--text-color)  !important;
+}
+
+.notifications-dropdown {
+  max-height: 250px !important; /* Set the maximum height */
+  overflow-y: auto  !important;  /* Enable vertical scrolling */
+  width: 300px; /* Optional: Set a width */
+  background-color: var(--background-color);
+}
+
+
+.dropdown{
+  margin-top: 10px;
+}
+
+
+.dropdown-menu{
+  background-color: var(--background-color);
+}
+
+.dropdown-item {
+  color: var(--text-color) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--dropdown)!important;
+}
+
+
+.list-dropdown {
+  color: var(--text-muted) !important; 
+  display: flex;
+  align-items: center; /* Align icon and text */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover */
+}
+
+
+/* Ensure icons are also muted */
+.list-dropdown i {
+  color: var(--text-muted) !important;
+  transition: color 0.3s ease;
+}
+
+.list-dropdown:hover i {
+  color: var(--text-color) !important;
+}
+
+.search-container {
+  position: relative;
+  width: 400px; /* Ensures it takes full width if placed inside a flex container */
+  max-width: 300px;
+  margin-right: 20px; /* Adjust this based on your design */
+}
+
+.search-input {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%; /* Makes sure input takes the full width of .search-container */
+  outline: none;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color, #ccc);
+}
+
+.search-input::placeholder {
+  color: var(--text-color);
+}
+
+.search-results {
+  position: absolute;
+  top: 45px; /* Adjust based on input height */
+  left: 0;
+  width: 100%; /* Ensures the dropdown is exactly the same width as the input */
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000; /* Ensures it appears above other elements */
+  border: 1px solid var(--border-color, #ddd);
+  padding: 5px 0;
+}
+
+.search-results li {
+  list-style: none;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+.search-results li:hover {
+  background: #007bff;
+  color: white;
+}
+
+.text-comments{
+  color: var(--text-comments);
 }

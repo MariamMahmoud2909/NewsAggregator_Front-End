@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center mb-4">
     @for (user of usersList; track user.id) {
       @if (user.id == idUser) {
-        <img src="../../../assets/images/oo.jpg" class="rounded-circle me-3" width="60" alt="User Profile">
+        <img [src]="'http://localhost:5069/' + user.profilePicUrl" class="rounded-circle me-3" width="60" alt="User Profile">
       <div>
         <h4 class="mb-0"> {{user.userName}} </h4>
         <p class="text-muted mb-0"> {{user.email}} </p>
@@ -15,7 +15,7 @@
   </div>
 
   <table class="table align-middle">
-      <thead class="table-light">
+      <thead >
           <tr>
               <th>Comment</th>
               <th>Comment Date</th>
@@ -31,8 +31,8 @@
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Action</button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"> Delete Comment</a></li>
-                        <li><a class="dropdown-item" href="#"> Lock user</a></li>
+                        <li><a class="dropdown-item cursor" (click)="deleteComment(comment.id)"> Delete Comment</a></li>
+                        <li><a class="dropdown-item cursor" (click)="comment.isLocked ? unlockUser(comment.userId) : lockUser(comment.userId)"> {{comment.isLocked? 'Unlock user' : 'Lock user' }} </a></li>
                     </ul>
                 </div>
             </td>

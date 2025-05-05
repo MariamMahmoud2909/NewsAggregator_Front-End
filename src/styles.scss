@@ -1,14 +1,92 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@fontsource/roboto';
+@use '@fontsource/roboto';
 
 :root {
   --main-color: #3281CA;
   --secondary-color: #09415A;
   --dark-color: #052737;
   --font-family: 'Roboto', sans-serif;
+
+  /* 🌞 Light Mode (Default) */
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --card-bg: #f8f9fa;
+  --icon:#212529;
+  --text-comments:#868686;
+  --bookmark:#ffffffcc;
+  --form-container:#ffffff;
+  --sidebar:#f8f9fa;
+  --text-muted:#6c757d;
+  --dropdown : #e7e7e7;
+  --border:#dee2e6;
+  --button:rgb(245, 242, 242);
 }
+
+/* 🌙 Dark Mode */
+.dark-mode {
+  --background-color: #19191a;
+  --text-color: #ffffff;
+  --secondary-color: #1E1F24;
+  --dark-color: #1E1F24;
+  --card-bg: #2E2E38;
+  --icon:#b7b7b8;
+  --text-comments:#c9c7c7;
+  --bookmark:#292828cc;
+  --form-container:#2E2E38;
+  --sidebar:#1E1F24;
+  --text-muted:#e4e3e2;
+  --dropdown : #3b3b4d;
+  --border:#414142;
+  --button:#2E2E38;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 
 .cursor{
   cursor: pointer;
+  // color: transparent;
 }
 
+/* Global Scrollbar Styles */
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust width */
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light grey */
+  border-radius: 10px;
+}
+
+/* Handle (the moving part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Darker grey */
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Even darker */
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox scrollbar styling */
+// * {
+//   scrollbar-width: thin; /* Makes the scrollbar thinner */
+//   scrollbar-color: #888 #f1f1f1; /* Thumb color | Track color */
+// }

@@ -1,167 +1,252 @@
 <section class="container">
-  <div class="text-center">
-      <h3>Travel</h3>
-      <p>
-          Create a blog and share <br>
-  your voice in minutes. Every feature you need <br>
-  to create a powerful blog.
-      </p>
-  </div>
-  <section class="Categories-image position-relative d-flex flex-column align-items-center justify-content-center text-center text-white">
-      <div class="image-container position-relative w-100 h-100 overflow-hidden">
-        <div class="image-overlay position-absolute top-0 start-0 w-100 h-100"></div>
-        <img src="../../../assets/images/Rectangle 74.jpg" alt="Blog Image">
-      </div>
-      <div class="categories-image-content position-absolute z-2">
-        <h1 class="fs-1">Category</h1>
-      </div>
-  </section>
 
-  <div class="d-flex justify-content-end">
-      <button class="btn btn-grey my-4">Summarize Article <i class="fa-solid fa-down-long"></i></button>
-  </div>
+  @for (article of articlesLists; track article._Id) {
 
-  <section>
-      <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ample opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
-      <p>As the day draws to a close, indulge in a mouthwatering seafood feast at a beachfront restaurant, savoring the fresh flavors of the ocean. Then, recline in a hammock beneath a canopy of stars, mesmerized by the celestial display overhead.</p>
-      <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ample opportunities for snorkeling amidst vibrant coral reefs teeming with marine life.</p>
-      <p>Escape the ordinary and embrace the serenity of this hidden gem—a beach paradise that promises unforgettable moments of tranquility and relaxation.</p>
-      <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ample opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
-      <div class="row">
-          <div class="col-6">
-              <img src="../../../assets/images/Rectangle 28.jpg" alt="">
+    <div class="text-center">
+        <h3 class="text-capitalize mt-4"> {{article.topic}} </h3>
+        <p class="">
+            {{article.title}}
+          </p>
+          <p>
+          {{article.excerpt}}
+        </p>
+    </div>
+
+    <section class="Categories-image position-relative d-flex flex-column align-items-center justify-content-center text-center text-white">
+        <div class="image-container position-relative w-100 h-100 overflow-hidden">
+          <div class="image-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+          <img [src]="article.media" alt="Blog Image">
+        </div>
+        <div class="categories-image-content position-absolute z-2">
+          <h1 class="fs-1"> {{article.topic.toUpperCase()}} </h1>
+        </div>
+    </section>
+
+    <div class="d-flex justify-content-end">
+        <button  (click)="summarizeArticle()" class="btn btn-color my-4 mx-1"><i class="bi bi-journal-text"></i> Summarize Article
+        </button>
+
+        <div *ngIf="summarizedText">
+          <h3>Summarized Article:</h3>
+          <p>{{ summarizedText }}</p>
+        </div>
+<!-- mehtaga el styling bta3 l summarized article yetzabat 
+     ma3reftesh azabato khales kol mara kan bybooz meny aktar
+     w elmafrood el original article yetshal w yethat makano el summarized 3alatool w 
+     momken yeb2a fe option yeraga3 el original article baa wala haga -->
+        <div class="dropdown">
+          <button class="btn btn-color my-4 mx-1 py-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-microphone fs-5"></i> Listen
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item cursor" (click)="playTextToSpeech(article.summary, 'en-US')">English</a></li>
+            <li><a class="dropdown-item cursor" (click)="playTextToSpeech(article.summary, 'fr-FR')">Français</a></li>
+          </ul>
+        </div>    
+        
+        <!-- Overlay for audio playing -->
+        <div *ngIf="isPlaying" class="overlay">
+          <button class="btn-close" (click)="stopAudio()">&times;</button> <!-- Move it here -->
+          <div class="overlay-content">
+            <div class="audio-player">
+              <button class="btn btn-light me-2" (click)="pauseAudio()" *ngIf="isAudioPlaying">
+                <i class="fa-solid fa-pause"></i>
+              </button>
+              <button class="btn btn-light me-2" (click)="resumeAudio()" *ngIf="!isAudioPlaying">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            
+              <input
+                type="range"
+                class="form-range"
+                [value]="currentTime"
+                [max]="duration"
+                (input)="seekAudio($event)"
+              />
+            
+              <span class="time ms-2">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
+            </div>            
           </div>
-          <div class="col-6">
-              <div>
-                  <h4>Every feature you need to create a powerful blog</h4>
-                  <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ampl  opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
-                  <p>Escape the ordinary and embrace the serenity of this hidden gem—a beach paradise that promises unforgettable moments of tranquility and relaxation.</p>
-                  <p>Escape the ordinary and embrace the serenity of this hidden gem—a beach .</p>
+        </div>
+                       
+
+        <div class="position-relative">
+          <button class="btn btn-color my-4 mx-1" (click)="toggleShare($event)">
+            <i class="bi bi-share fs-5"></i>
+          </button>
+
+          <div *ngIf="showShareOptions" class="share-options position-absolute start-0 bg-white border rounded p-2 mt-2 d-flex">
+            <a (click)="selectPlatform('facebook')" class="text-primary me-3" aria-label="Facebook">
+              <i class="fa-brands fa-facebook fa-2x"></i>
+            </a>
+            <a (click)="selectPlatform('twitter')" class="text-info me-3" aria-label="Twitter">
+              <i class="fa-brands fa-twitter fa-2x"></i>
+            </a>
+            <a (click)="selectPlatform('whatsapp')" class="text-success" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp fa-2x"></i>
+            </a>
+          </div>
+        </div>
+
+
+        <button class="btn btn-color my-4 mx-1" (click)="downloadArticle()">
+          <i class="bi bi-download fs-5 fa-bold"></i>
+        </button>
+
+        <div class="dropdown">
+          <button class="btn btn-color my-4 mx-1 py-2 dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-earth-americas fs-5 me-2"></i> {{ selectedLanguageSpeech }}
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item cursor" (click)="selectLanguage('en', 'English')">English</a></li>
+            <li><a class="dropdown-item cursor" (click)="selectLanguage('fr', 'French')">French</a></li>
+            <li><a class="dropdown-item cursor" (click)="selectLanguage('ar', 'Arabic')">Arabic</a></li>
+          </ul>
+        </div>        
+        
+    </div>
+
+      <section>
+          <!-- <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ample opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
+          <p>As the day draws to a close, indulge in a mouthwatering seafood feast at a beachfront restaurant, savoring the fresh flavors of the ocean. Then, recline in a hammock beneath a canopy of stars, mesmerized by the celestial display overhead.</p>
+          <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ample opportunities for snorkeling amidst vibrant coral reefs teeming with marine life.</p>
+          <p>Escape the ordinary and embrace the serenity of this hidden gem—a beach paradise that promises unforgettable moments of tranquility and relaxation.</p> -->
+          <p *ngIf="translatedSummary; else originalSummary">{{ translatedSummary }}</p>
+          <ng-template #originalSummary>
+            <p>{{ article.summary }}</p>
+          </ng-template>
+
+          <div class="row">
+              <div class="col-6">
+                  <img [src]="article.media" alt="" width="100%" >
+              </div>
+              <div class="col-6">
+                  <div>
+                      <h4> {{translatedTitle || article.title}} </h4>
+                      <!-- <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ampl  opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
+                      <p>Escape the ordinary and embrace the serenity of this hidden gem—a beach paradise that promises unforgettable moments of tranquility and relaxation.</p> -->
+                      <p>{{ (translatedSummary || article.excerpt )}}</p>
+                  </div>
               </div>
           </div>
-      </div>
-      <h4 class="mt-3">Every feature you need to create a powerful blog</h4>
-      <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ampl  opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
-      <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary.</p>
-  </section>
+          <!-- <h4 class="mt-3">Every feature you need to create a powerful blog</h4>
+          <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary. For the adventurous souls, there are ampl  opportunities for snorkeling amidst vibrant coral reefs teeming with marine life. Dive into the crystal-clear waters and discover a world brimming with colorful fish and exotic creatures. Alternatively, simply unwind beneath the shade of swaying palm trees, sipping on refreshing coconut water as you bask in the warmth of the tropical sun.</p>
+          <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise. Stroll along the powdery sands, feeling the gentle caress of the ocean breeze against your skin. Listen to the soothing symphony of waves crashing against the shore, a melody that lulls you into a state of peaceful bliss. Seabirds dance gracefully overhead, adding to the enchanting ambiance of this secluded sanctuary.</p> -->
+      </section>
+
+  }
+
+
 
   <section class="mt-4">
       <h3>Comments</h3>
       <hr>
-      <div class="d-flex">
-          <img src="../../../assets/images/Ellipse 6.jpg" alt="">
-          <div>
-              <h3>Soni kumari</h3>
-              <small class="text-secondary">Just now</small>
-              <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise.
-                  <small class="text-secondary">22th aug 2023</small>
-              </p>
+      @for (comment of commentsForSpecificArticleLists; track comment.id) {
 
-          </div>
-      </div>
-      <div class="d-flex">
-          <img src="../../../assets/images/Ellipse 6.jpg" alt="">
-          <div>
-              <h3>Soni kumari</h3>
-              <small class="text-secondary">Just now</small>
-              <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise.
-                  <small class="text-secondary">22th aug 2023</small>
-              </p>
+        <div class="d-flex position-relative">
+          <!-- three dots  -->
+            @if (comment.userId === userId) {
+              <div class="dropdown position-absolute top-0 start-0 m-2">
+                <button class="btn btn-light btn-sm rounded-circle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                  <li>
+                    <a class="dropdown-item cursor" (click)="startEditing(comment)"> <i class="bi bi-pencil text-primary me-2"></i> Edit Comment </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item cursor" (click)="deleteComment(comment.id)"> <i class="bi bi-trash text-danger me-2"></i>Delete Comment </a>
+                  </li>
+                </ul>
+              </div>
 
-          </div>
-      </div>
-      <div class="d-flex">
-          <img src="../../../assets/images/Ellipse 6.jpg" alt="">
-          <div>
-              <h3>Soni kumari</h3>
-              <small class="text-secondary">Just now</small>
-              <p>Embark on a journey to the untouched beauty of a secluded beach nestled away from the hustle and bustle of city life. As the sun kisses the horizon, casting hues of orange and pink across the sky, you'll find yourself captivated by the tranquility that envelops this coastal paradise.
-                  <small class="text-secondary">22th aug 2023</small>
-              </p>
+            }
+            <img [src]="'http://localhost:5069/' + comment.profilePicUrl" class="rounded-circle me-4" width="8%">
+            <div>
+                <h3> {{comment.userName}}  </h3>
+                <small class="text-secondary"> {{comment.createdAt}} </small>
+                <p>  {{comment.content}}
+                    <!-- <small class="text-secondary">22th aug 2023 </small> -->
+                </p>
+                <form enctype='multipart/form-data' [formGroup]="editCommentForm" (ngSubmit)="editcomment(comment.id)">
+                  <input *ngIf="editCommentId === comment.id" type="text"  class="form-control w-100" [value]="comment.content" formControlName="content" id="content"/>
+                  <button *ngIf="editCommentId === comment.id" class="btn btn-success btn-sm mt-1 px-4" (click)="editcomment(comment.id)">Save</button>
+                  <button *ngIf="editCommentId === comment.id" class="btn btn-secondary btn-sm ms-2 mt-1 px-4" (click)="editCommentId = null">Cancel</button>
+                </form>
+              </div>
+            </div>
+            <hr>
 
-          </div>
-      </div>
-      <input type="text" name="" id="" class="input-group form-control mb-3" placeholder="Write a comment">
+
+      }
+
+      <form enctype='multipart/form-data' [formGroup]="commentForm" (ngSubmit)="commentSubmit()">
+        <input type="text" formControlName="content" id="content" class="input-group form-control mb-3" placeholder="Write a comment">
+      </form>
 
   </section>
+
+
 </section>
 
 <section class="bg-story mt-5">
   <div class="container py-5 ">
-      <h3>More Stores</h3>
+      <h3>More News</h3>
   <hr>
   <div class="row">
-      <div class="col-md-3">
-          <div class="product p-2">
-              <div class="position-relative image-wrapper">
-                  <i class="fa-solid fa-bookmark bookmark-icon"></i>
-                  <img src="../../../assets/images/Rectangle 25.jpg" class="card-img" alt="name">
-                  <p class="position-absolute category-name text-white">Sports</p>
-              </div>
-              <h4 class="h6 mt-3">Travel Guide: Where to eat, sleep and sight-see in Vienne, France</h4>
-              <div class="d-flex align-items-center justify-content-between">
-                  <small class="text-secondary">By Soni Kumari</small>
-                  <div class="d-flex align-items-center justify-content-between">
-                      <i class="fa-regular fa-heart p-2 fs-5"></i>
-                      <i class="fa-regular fa-comment fs-5"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
+      @for (item of moreNews.slice(0,4); track $index)
+      {
+        <div class="col-md-3">
+            <div class="p-2 cursor" [routerLink]="['/article', item._Id.toString()]">
+                <div class="position-relative image-wrapper">
+                  <i class="fa-bookmark bookmark-icon"
+   [ngClass]="{
+      'fa-solid': isBookmarked(item._Id),
+      'fa-regular': !isBookmarked(item._Id)
+    }"
+   (click)="toggleBookmark(item._Id, $event)">
+</i>
+                    <img [src]="item.media" class="w-100 object-fit-cover" height="250px" alt="name">
+                    <p class="position-absolute category-name text-white text-capitalize">{{getCategoryDisplayName(item.topic)}}</p>
+                </div>
+                <h4 class="h6 mt-3">{{item.title.slice(0,50)}}...</h4>
+                <div class="d-flex align-items-center justify-content-between">
+                    <small class="text-comments">{{item.published_Date}}</small>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div class="d-flex align-items-center">
+                        <span style="font-size: 1.2em; margin-bottom: 5px;">{{ likeCounts[item._Id] || 0 }}</span>
+                        <i class="fs-5 pe-2 ps-1 text-comments"
+                          [ngClass]="favoriteStates[item._Id] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"
+                          (click)="toggleFavorite(item._Id, $event)">
+                        </i>
+                      </div>
+                        <i class="fa-regular fa-comment fs-5 cursor text-comments" (click)="openCommentPopup(item._Id, $event)"></i>
 
-      <div class="col-md-3">
-          <div class="product p-2">
-              <div class="position-relative image-wrapper">
-                  <i class="fa-solid fa-bookmark bookmark-icon"></i>
-                  <img src="../../../assets/images/Rectangle 25.jpg" class="card-img" alt="name">
-                  <p class="position-absolute category-name text-white">Sports</p>
-              </div>
-              <h4 class="h6 mt-3">Travel Guide: Where to eat, sleep and sight-see in Vienne, France</h4>
-              <div class="d-flex align-items-center justify-content-between">
-                  <small class="text-secondary">By Soni Kumari</small>
-                  <div class="d-flex align-items-center justify-content-between">
-                      <i class="fa-regular fa-heart p-2 fs-5"></i>
-                      <i class="fa-regular fa-comment fs-5"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-3">
-          <div class="product p-2">
-              <div class="position-relative image-wrapper">
-                  <i class="fa-solid fa-bookmark bookmark-icon"></i>
-                  <img src="../../../assets/images/Rectangle 25.jpg" class="card-img" alt="name">
-                  <p class="position-absolute category-name text-white">Sports</p>
-              </div>
-              <h4 class="h6 mt-3">Travel Guide: Where to eat, sleep and sight-see in Vienne, France</h4>
-              <div class="d-flex align-items-center justify-content-between">
-                  <small class="text-secondary">By Soni Kumari</small>
-                  <div class="d-flex align-items-center justify-content-between">
-                      <i class="fa-regular fa-heart p-2 fs-5"></i>
-                      <i class="fa-regular fa-comment fs-5"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-3">
-          <div class="product p-2">
-              <div class="position-relative image-wrapper">
-                  <i class="fa-solid fa-bookmark bookmark-icon"></i>
-                  <img src="../../../assets/images/Rectangle 25.jpg" class="card-img" alt="name">
-                  <p class="position-absolute category-name text-white">Sports</p>
-              </div>
-              <h4 class="h6 mt-3">Travel Guide: Where to eat, sleep and sight-see in Vienne, France</h4>
-              <div class="d-flex align-items-center justify-content-between">
-                  <small class="text-secondary">By Soni Kumari</small>
-                  <div class="d-flex align-items-center justify-content-between">
-                      <i class="fa-regular fa-heart p-2 fs-5"></i>
-                      <i class="fa-regular fa-comment fs-5"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
+                        <app-comment-pop-up
+                          [showComments]="showPopup"
+                          [articleId]="selectedArticleId"
+                          (closePopup)="showPopup = false">
+                        </app-comment-pop-up>
+                    </div>
+                </div>
+            </div>
+        </div>
+      }
   </div>
   </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item cursor" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">&laquo;</a>
+      </li>
+      <li class="page-item cursor" *ngFor="let page of totalPagesArray" [class.active]="page === currentPage">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item cursor" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)">&raquo;</a>
+      </li>
+    </ul>
+  </nav>
 </section>

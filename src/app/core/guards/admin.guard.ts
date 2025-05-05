@@ -5,7 +5,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const _Router = inject(Router)
 
   if(typeof localStorage !== 'undefined'){
-    if(localStorage.getItem('userToken') !== null ){
+    if(localStorage.getItem('userToken') !== null && localStorage.getItem('userName') == 'Admin'){
       return true;
     }
     else{

@@ -1,12 +1,12 @@
 <div class="container d-flex align-items-center justify-content-center pb-3">
-  <div class="row w-100">
+  <div class="row w-50">
     <div class="w-100 d-flex justify-content-center align-items-center pt-3">
       <!-- Make the form container wider, using col-lg-8 or col-xl-10 -->
       <div class="form-container col-lg-8 col-xl-10 ">
         <div class="text-center mb-3">
           <img src="../../../assets/images/logo2.png" alt="Logo" width="70px" class="mb-2">
           <h1 class="form-title">Login</h1>
-          <p class="form-text">Add your details below to get back into the app</p>
+          <p class="form-text text-comments">Add your details below to get back into the app</p>
         </div>
         <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
 
@@ -20,6 +20,9 @@
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input formControlName="password" type="password" class="form-control w-100" id="password" placeholder="Password" required>
+            @if (passwordError) {
+              <div class="text-danger mt-1 small">{{ passwordError }}</div>
+            }
           </div>
 
 
@@ -32,13 +35,13 @@
             <a class="text-decoration-none" routerLink="/forgetpassword">Forget Password?</a>
           </div>
 
-          @if (msgError)
+          <!-- @if (msgError)
           {
             <p class="alert alert-danger"> {{msgError}} </p>
-          }
+          } -->
 
           <div class="login-link text-center">
-            Don’t have an account? <a routerLink="/register">Create account</a>
+            Don't have an account? <a routerLink="/register">Create account</a>
           </div>
         </form>
       </div>

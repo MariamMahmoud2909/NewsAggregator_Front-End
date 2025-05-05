@@ -4,7 +4,11 @@ html, body {
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
   overflow: hidden; /* Prevent scrolling */
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
+}
+
+.text-comments{
+  color: var(--text-comments);
 }
 
 /* Full height container */
@@ -22,7 +26,7 @@ html, body {
 .form-container {
   max-width: 900px; /* Increase max-width for larger form */
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--card-bg);
   padding: 2rem; /* Increased padding for better spacing */
   border-radius: 8px;
   box-shadow: 0 4px 6px 4px rgba(0, 0, 0, 0.1);

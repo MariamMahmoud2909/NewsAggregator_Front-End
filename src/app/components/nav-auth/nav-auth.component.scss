@@ -1,9 +1,14 @@
 .trending-bar {
-  background-color: #09415a;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   font-size: 12px;
   padding: 5px 15px;
 }
+
+.navbar{
+  background-color: var(--background-color);
+}
+
 .navbar-brand img {
   height: 40px; /* Adjust logo height */
 }
@@ -14,7 +19,7 @@
 }
 .social-icons i {
   font-size: 17px; /* Icon size */
-  color: white; /* Icon color */
+  color: var(--text-color); /* Icon color */
   transition: color 0.3s, transform 0.3s; /* Smooth hover effect */
 }
 .social-icons i:hover {
@@ -28,7 +33,7 @@
 .nav-link {
   font-size: 16px; /* Adjust font size */
   font-weight: 500;
-  color: #09415A !important; /* Customize link color */
+  color: var(--text-color) !important; /* Customize link color */
   padding-left: 10px; /* Reduced spacing */
   padding-right: 10px; /* Reduced spacing */
 }

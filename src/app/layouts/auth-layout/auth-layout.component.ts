@@ -5,11 +5,10 @@ import { FooterComponent } from "../../components/footer/footer.component";
 import { SentimentNavComponent } from "../../components/sentiment-nav/sentiment-nav.component";
 
 @Component({
-  selector: 'app-auth-layout',
-  standalone: true,
-  imports: [NavAuthComponent, RouterOutlet, FooterComponent, SentimentNavComponent],
-  templateUrl: './auth-layout.component.html',
-  styleUrl: './auth-layout.component.scss'
+    selector: 'app-auth-layout',
+    imports: [NavAuthComponent, RouterOutlet, FooterComponent, SentimentNavComponent],
+    templateUrl: './auth-layout.component.html',
+    styleUrl: './auth-layout.component.scss'
 })
 export class AuthLayoutComponent {
 
