@@ -40,3 +40,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+angular.json
+categoryBased_recommended_news.json
+angular.json
+package.json
+package-lock.json
+angular.json
+package-lock.json
